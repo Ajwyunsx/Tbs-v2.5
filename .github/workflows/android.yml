@@ -1,5 +1,14 @@
 name: Android Build OG
-on: workflow_dispatch
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -49,7 +58,7 @@ jobs:
           haxelib install flixel-tools
           haxelib install flixel-ui
           haxelib install flixel-addons 3.0.2
-          haxelib git hxCodec https://github.com/SPLCoding/hxCodec-but-it-works-xd.git
+          haxelib git hxCodec https://github.com/FNF-Pk-Dev/hxCodec.git
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
