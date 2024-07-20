@@ -87,7 +87,7 @@ class MusicBeatState extends FlxUIState
 
 		trackedInputsMobileControls = controls.trackedInputsNOTES;
 		controls.trackedInputsNOTES = [];
-		trackedInputsVirtualPad = controls.trackedinputsUI;
+		trackedInputsVirtualPad = controls.trackedInputsUI;
 		controls.trackedInputsUI = [];
 
 		var camControls:FlxCamera = new FlxCamera();
