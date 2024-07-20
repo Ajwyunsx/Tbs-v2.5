@@ -1042,7 +1042,7 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 		add(grpNoteSplashes);
 		
-		if (SONG.song == "Vanishing" || SONG.song == "Sirokou" || SONG.song == "vanishing" || SONG.song == "sirokou")
+		if (SONG.song == "Freeplay" || SONG.song == "Freeplay1" || SONG.song == "Freeplay2" || SONG.song == "Freeplay3" || SONG.song == "Freeplay4" || SONG.song == "Freeplay5" || SONG.song == "Freeplay6" || SONG.song == "Chainsaw-Maniac" || SONG.song == "Sirokou")
 			{
 			space = true;
 			}
@@ -2003,7 +2003,7 @@ class PlayState extends MusicBeatState
 
 	public function startCountdown():Void
 	{
-	if (SONG.song == "Freeplay" || SONG.song == "Freeplay1" || SONG.song == "Freeplay2" || SONG.song == "Freeplay3" || SONG.song == "Freeplay4" || SONG.song == "Freeplay5" || SONG.song == "Sirokou")
+	if (SONG.song == "Freeplay" || SONG.song == "Freeplay1" || SONG.song == "Freeplay2" || SONG.song == "Freeplay3" || SONG.song == "Freeplay4" || SONG.song == "Freeplay5" || SONG.song == "Freeplay6" || SONG.song == "Sirokou")
 			{
 			#if mobile
 			mobileControls.visible = true;
@@ -3296,7 +3296,6 @@ class PlayState extends MusicBeatState
 		persistentUpdate = false;
 		persistentDraw = true;
 		paused = true;
-		space = true;
 
 		// 1 / 1000 chance for Gitaroo Man easter egg
 		/*if (FlxG.random.bool(0.1))
@@ -3918,7 +3917,7 @@ class PlayState extends MusicBeatState
 			#if mobile
 			mobileControls.visible = true;
 			#end
-		if (SONG.song == "Vanishing" || SONG.song == "Sirokou")
+		if (SONG.song == "Chainsaw Maniac" || SONG.song == "Sirokou")
 			{
 			space = false;
 			}
@@ -5000,6 +4999,8 @@ class PlayState extends MusicBeatState
 		#if hscript
 		if(FunkinLua.hscript != null) FunkinLua.hscript = null;
 		#end
+		
+		space = false;
 
 		if(!ClientPrefs.controllerMode)
 		{
