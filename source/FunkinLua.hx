@@ -1370,15 +1370,15 @@ class FunkinLua {
 		{
 			var key:Bool = false;
 			switch(name) {
-				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
-				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
-				case 'up': key = PlayState.instance.getControl('NOTE_UP_P');
-				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_P');
+				case 'LEFT': key = PlayState.instance.getControl('NOTE_LEFT_P');
+				case 'DOWN': key = PlayState.instance.getControl('NOTE_DOWN_P');
+				case 'UP': key = PlayState.instance.getControl('NOTE_UP_P');
+				case 'RIGHT': key = PlayState.instance.getControl('NOTE_RIGHT_P');
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
-				case 'back': key = PlayState.instance.getControl('BACK');
+				case 'BACK': key = PlayState.instance.getControl('BACK') || FlxG.android.justReleased.BACK;
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
+				case 'SPACE': key = (PlayState.instance.getControl('SPACE') || FlxG.keys.justPressed.SPACE);//an extra key for convinience
 			}
 			return key;
 		});
