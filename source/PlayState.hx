@@ -74,13 +74,8 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") 
-import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") 
-import VideoHandler as MP4Handler;
-#else 
-import VideoHandler as MP4Handler;
-#end
+import VideoHandler;
+import VideoSprite;
 #end
 
 using StringTools;
@@ -1241,6 +1236,18 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 		#end
 		
+		#if LUA_ALLOWED
+		var doPush:Bool = false;
+		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/cutscene.lua';
+			luaFile = Paths.getPreloadPath(luaFile);
+			if(OpenFlAssets.exists(luaFile)) {
+				doPush = true;
+			}
+		
+		if(doPush) 
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+		#end
+		
 		    #if LUA_ALLOWED
 		var doPush:Bool = false;
 		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/add characters list.lua';
@@ -1256,21 +1263,6 @@ class PlayState extends MusicBeatState
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
 		{
-			switch (daSong)
-			{
-
-				case 'blue':
-				startVideo('blue-begin');
-				
-				case 'funny cartoon':
-				startVideo('pibby-start');
-				
-				case "House for sale":
-				startVideo('cutscenes1');
-
-				default:
-					startCountdown();
-			}
 			seenCutscene = true;
 		}
 		else
@@ -1539,31 +1531,19 @@ class PlayState extends MusicBeatState
 	public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
-		inCutscene = true;
-
-		var filepath:String = Paths.video(name);
-		#if desktop
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
-		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			bg.cameras = [camOther];
+			bg.scrollFactor.set(0, 0);
+			add(bg);
+			var cutVid:VideoHandler;
+			inCutscene = true;
+			cutVid = new VideoHandler();
+			cutVid.playVideo(Paths.video(name));
+			cutVid.finishCallback = function()
+			{
 			startAndEnd();
-			return;
-		}
-
-		var video:MP4Handler = new MP4Handler();
-		video.playVideo(Asset2File.getPath(filepath));
-		video.finishCallback = function()
-		{
-			startAndEnd();
-			return;
-		}
-		#else
-		FlxG.log.warn('Platform not supported!');
-		startAndEnd();
-		return;
+			bg.alpha = 0;
+			}
 		#end
 	}
 
