@@ -154,7 +154,8 @@ class Paths
 
 	inline public static function getPreloadPath(file:String = '')
 	{
-		return mobile.Generic.returnPath() + 'assets/$file';
+		//return mobile.Generic.returnPath() + 'assets/$file';
+		return 'assets/$file';
 	}
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
