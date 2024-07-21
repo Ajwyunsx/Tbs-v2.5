@@ -182,52 +182,6 @@ class Generic {
 	}
 }
 
-class PermsState extends FlxState {
-	var permsbutton:FlxUIButton;
-	var continuebutton:FlxUIButton;
-	var text:FlxText;
-	public static var callback:Void->Void = null;
-	override public function create():Void
-	{
-		text = new FlxText(0,0, FlxG.width, "PERMISSIONS" + "\n" + "this game needs storage permissions to work" + "\n" + "press 'Ask Permissions' to ask them" + "\n" + "press 'continue' to run the game", 32);
-		text.setFormat("VCR OSD Mono", 32);
-		text.screenCenter(XY);
-		text.y -= FlxG.height / 4;
-		text.alignment = CENTER;
-		add(text);
-		#if android
-		permsbutton = new FlxUIButton(0,0,"Ask Permissions", () -> {
-            Permissions.requestPermission([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE]);
-        });
-       #end
-        permsbutton.screenCenter(XY);
-        permsbutton.x -= 400;
-        permsbutton.y += 100;
-        permsbutton.resize(250,50);
-		permsbutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
-		add(permsbutton);
-        continuebutton = new FlxUIButton(0,0,"continue", () -> {
-			if (callback != null) {
-				callback();
-			}
-        	//FlxG.switchState(Type.createInstance(Main.initialState, []));
-        });
-        continuebutton.screenCenter(XY);
-        continuebutton.x += 300;
-        continuebutton.y += 100;
-		continuebutton.resize(250,50);
-		continuebutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
-		add(continuebutton);
-		
-		super.create();
-	}
-	
-	override function update(elapsed:Float)
-	{
-		super.update(elapsed);
-	}
-}
-
 enum Modes {
 	ROOTDATA;
 	INTERNAL;
