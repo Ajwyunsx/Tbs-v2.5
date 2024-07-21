@@ -1248,6 +1248,18 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
 		#end
 		
+		#if LUA_ALLOWED
+		var doPush:Bool = false;
+		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script (2).lua';
+			luaFile = Paths.getPreloadPath(luaFile);
+			if(OpenFlAssets.exists(luaFile)) {
+				doPush = true;
+			}
+		
+		if(doPush) 
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+		#end
+		
 		    #if LUA_ALLOWED
 		var doPush:Bool = false;
 		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/add characters list.lua';
@@ -1527,7 +1539,7 @@ class PlayState extends MusicBeatState
 		char.x += char.positionArray[0];
 		char.y += char.positionArray[1];
 	}
-
+/*
 	public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
@@ -1546,7 +1558,36 @@ class PlayState extends MusicBeatState
 			}
 		#end
 	}
+*/
+    public function startVideo(name:String)
+	{
+		#if VIDEOS_ALLOWED
+		inCutscene = true;
 
+		var filepath:String = Paths.video(name);
+	
+        
+		if (!OpenFlAssets.exists(filepath))
+		{
+			FlxG.log.warn('Couldnt find video file: ' + name);
+			startAndEnd();
+			return;
+		}
+
+		var video:VideoHandler= new VideoHandler();
+		video.playVideo(filepath);
+		video.finishCallback = function()
+		{
+			startAndEnd();
+			return;
+		}
+		#else
+		FlxG.log.warn('Platform not supported!');
+		startAndEnd();
+		return;
+		#end
+	}
+	
 	function startAndEnd()
 	{
 		if(endingSong)
